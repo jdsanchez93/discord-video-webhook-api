@@ -6,7 +6,15 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 100
+    Timeout: 5
+
+Parameters:
+  BucketName:
+    Description: Name of s3 bucket
+    Type: String
+  BucketArn:
+    Description: s3 bucket arn
+    Type: String
 
 Resources:
   NetCodeWebAPIServerless:
@@ -17,6 +25,20 @@ Resources:
       Handler: ServerlessAPI
       Runtime: dotnet8
       MemorySize: 1024
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          AWS__BucketName: !Ref BucketName
+      Policies:
+        # Give PutObject permissions to bucket
+        - Version: '2012-10-17' 
+          Statement:
+            - Effect: Allow
+              Action:
+                - s3:PutObject
+              Resource: !Join 
+                  - ''
+                  - - !GetAtt BucketArn
+                    - /*
       Events:
         ProxyResource:
           Type: HttpApi
