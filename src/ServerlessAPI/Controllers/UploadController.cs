@@ -13,12 +13,14 @@ public class UploadController(ILogger<UploadController> logger, IConfiguration c
     private readonly IAmazonS3 _s3Client = s3Client;
 
     [HttpPut]
-    public ActionResult<string> GenerateUploadUrl([FromBody] string fileName)
+    public ActionResult<string> GenerateUploadUrl([FromBody] UploadData uploadData)
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(uploadData.FileName))
+                return BadRequest();
             string bucketName = _configuration["AWS:BucketName"] ?? "";
-            return GeneratePreSignedURL(bucketName, fileName);
+            return GeneratePreSignedURL(bucketName, uploadData.FileName);
         }
         catch (Exception e)
         {
@@ -37,6 +39,11 @@ public class UploadController(ILogger<UploadController> logger, IConfiguration c
             Verb = HttpVerb.PUT
         };
         return _s3Client.GetPreSignedURL(r);
+    }
+
+    public class UploadData
+    {
+        public string? FileName { get; set; }
     }
 
 }
