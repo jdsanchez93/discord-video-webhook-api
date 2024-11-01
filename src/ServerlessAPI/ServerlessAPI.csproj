@@ -10,6 +10,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <!-- Generate ready to run images during publishing to improve cold start time. -->
     <PublishReadyToRun>true</PublishReadyToRun>
+    <UserSecretsId>c1cb813f-0de2-420a-95b1-8ed2f2cc8fab</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
