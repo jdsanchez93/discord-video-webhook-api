@@ -28,3 +28,13 @@ warm_containers = "EAGER"
 
 [default.local_start_lambda.parameters]
 warm_containers = "EAGER"
+
+[dev.deploy.parameters]
+stack_name = "discord-video-webhook-api-dev"
+resolve_s3 = true
+s3_prefix = "discord-video-webhook-api-dev"
+region = "us-east-2"
+profile = "create-ecs-service-stack"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "BucketName=\"jd-discord-clips-personal-dev\""
+image_repositories = []

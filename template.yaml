@@ -12,9 +12,6 @@ Parameters:
   BucketName:
     Description: Name of s3 bucket
     Type: String
-  BucketArn:
-    Description: s3 bucket arn
-    Type: String
 
 Resources:
   NetCodeWebAPIServerless:
@@ -35,10 +32,11 @@ Resources:
             - Effect: Allow
               Action:
                 - s3:PutObject
-              Resource: !Join 
+              Resource: !Join
                   - ''
-                  - - !GetAtt BucketArn
-                    - /*
+                  - - 'arn:aws:s3:::'
+                    - !Ref BucketName
+                    - '/*'
       Events:
         ProxyResource:
           Type: HttpApi
