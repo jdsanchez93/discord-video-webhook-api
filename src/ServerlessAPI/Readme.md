@@ -5,6 +5,17 @@ This project shows how to run an ASP.NET Core Web API project as an AWS Lambda e
 
 For more information about how the Amazon.Lambda.AspNetCoreServer package works and how to extend its behavior view its [README](https://github.com/aws/aws-lambda-dotnet/blob/master/Libraries/src/Amazon.Lambda.AspNetCoreServer/README.md) file in GitHub.
 
+## Setup ##
+
+For development, this project can use Secrets Manager to store sensitive data: https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows#secret-manager
+From the base directory, you can run the following commands to set the required secrets:
+```
+dotnet user-secrets set "AWS:BucketName" "<value>"
+dotnet user-secrets set "AWS:Profile" "dev-discord-video-webhook-api"
+dotnet user-secrets set "AWS:Region" "us-east-2"
+```
+Alternatively, you may use environment variables to set these values.
+
 ## Executable Assembly ##
 
 .NET Lambda projects that use C# top level statements like this project must be deployed as an executable assembly instead of a class library. To indicate to Lambda that the .NET function is an executable assembly the 

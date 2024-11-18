@@ -1,6 +1,5 @@
 using System.Text.Json;
-using Amazon;
-
+using Amazon.S3;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +15,8 @@ builder.Services
         {
             options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         });
+
+builder.Services.AddAWSService<IAmazonS3>();
 
 // Add AWS Lambda support. When running the application as an AWS Serverless application, Kestrel is replaced
 // with a Lambda function contained in the Amazon.Lambda.AspNetCoreServer package, which marshals the request into the ASP.NET Core hosting framework.
